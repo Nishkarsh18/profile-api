@@ -59,7 +59,7 @@ class ProfileFeedItem(models.Model):
 
     status_text = models.CharField(max_length = 255)
     created_on = models.DateTimeField(auto_now_add=True)
-
+    moretext = models.CharField(max_length=255,null=True)
 
     def __str__(self):
         return self.status_text
