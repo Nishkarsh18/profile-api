@@ -4,6 +4,7 @@ from rest_framework import status
 
 from profiles_api import serializers
 
+from rest_framework import viewsets
 
 class HelloApiView(APIView):
     """test api view"""
@@ -39,3 +40,38 @@ class HelloApiView(APIView):
     def patch(self,request,pk=None):
         """Handle partial update an object"""
         return Response({'mssg':"PATCH"})        
+    
+
+
+class HellowViewSet(viewsets.ViewSet):
+
+    def list(self,request):
+        a_viewset = [
+            'uses actions (list)',
+            'easy to use',
+            'simple operations'
+        ]
+
+        return Response({"mssg":"viewset","ss":a_viewset})
+    def create(self,request):
+        serializer = self.serializer_class(data = request.data)
+
+        if serializer.is_valid():
+            name = serializer.validated_data.get('name')
+            message = f'Hello {name}'
+            return Response({'mssg':message})
+        else:
+            return Response(serializer.errors,status = status.HTTP_400_BAD_REQUEST)
+
+    def retrieve(self,request,pk=None):
+        """Getting object by id"""
+        return Response({"mssg","fetch"})    
+    
+    def update(self,request,pk=None):
+        return Response({"mesage","update"})
+    
+    def partial_update(self,request,pk=None):
+        return Response({"mssg","partial"})
+    
+    def destroy(self,request,pk=None):
+        return Response({"mssg":"delete"})
